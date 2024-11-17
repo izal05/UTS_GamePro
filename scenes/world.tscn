@@ -1,0 +1,99 @@
+[gd_scene load_steps=6 format=3 uid="uid://c7747nqa234mi"]
+
+[ext_resource type="PackedScene" uid="uid://ba2pvllo1c8md" path="res://scenes/player_1.tscn" id="1_frmwq"]
+[ext_resource type="Script" path="res://scripts/game_manager.gd" id="1_yaro0"]
+[ext_resource type="PackedScene" uid="uid://cjkxsjr0f3wd0" path="res://scenes/player_2.tscn" id="2_7of67"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_u37ld"]
+size = Vector2(25, 663)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_4jd6y"]
+size = Vector2(1195, 20)
+
+[node name="world" type="Node2D"]
+script = ExtResource("1_yaro0")
+
+[node name="player1" parent="." instance=ExtResource("1_frmwq")]
+position = Vector2(142, 302)
+
+[node name="walls" type="Node2D" parent="."]
+
+[node name="wall" type="StaticBody2D" parent="walls"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="walls/wall"]
+position = Vector2(-15, 321.5)
+shape = SubResource("RectangleShape2D_u37ld")
+
+[node name="wall2" type="StaticBody2D" parent="walls"]
+position = Vector2(1183, 0)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="walls/wall2"]
+position = Vector2(-15, 321.5)
+shape = SubResource("RectangleShape2D_u37ld")
+
+[node name="wall3" type="StaticBody2D" parent="walls"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="walls/wall3"]
+position = Vector2(587.5, -11)
+shape = SubResource("RectangleShape2D_4jd6y")
+
+[node name="wall4" type="StaticBody2D" parent="walls"]
+position = Vector2(0, 671)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="walls/wall4"]
+position = Vector2(587.5, -11)
+shape = SubResource("RectangleShape2D_4jd6y")
+
+[node name="player2" parent="." instance=ExtResource("2_7of67")]
+position = Vector2(1008, 285)
+
+[node name="scores" type="Node2D" parent="."]
+
+[node name="p1_score" type="Label" parent="scores"]
+offset_left = 85.0
+offset_right = 165.0
+offset_bottom = 49.0
+theme_override_font_sizes/font_size = 35
+text = "P1: 0"
+
+[node name="p2_score" type="Label" parent="scores"]
+offset_left = 990.0
+offset_right = 1070.0
+offset_bottom = 49.0
+theme_override_font_sizes/font_size = 35
+text = "P2: 0"
+
+[node name="gameoverscreen" type="Control" parent="."]
+process_mode = 2
+visible = false
+z_index = 10
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="ColorRect" type="ColorRect" parent="gameoverscreen"]
+layout_mode = 0
+offset_right = 1158.0
+offset_bottom = 655.0
+color = Color(0, 0, 0, 0.588235)
+
+[node name="wintext" type="Label" parent="gameoverscreen"]
+layout_mode = 0
+offset_left = 374.0
+offset_top = 168.0
+offset_right = 834.0
+offset_bottom = 237.0
+theme_override_font_sizes/font_size = 50
+text = "Player 1 Has Won"
+
+[node name="restarbutton" type="Button" parent="gameoverscreen"]
+layout_mode = 0
+offset_left = 491.0
+offset_top = 260.0
+offset_right = 673.0
+offset_bottom = 317.0
+theme_override_font_sizes/font_size = 35
+text = "Play Again"
+
+[connection signal="pressed" from="gameoverscreen/restarbutton" to="." method="_on_restarbutton_pressed"]
